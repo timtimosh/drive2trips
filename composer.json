@@ -1,0 +1,26 @@
+{
+    "name": "timosh/drive2_trip_parser",
+    "description": "trip parser for drive2.ru",
+    "type": "project",
+    "require": {
+        "php-curl-class/php-curl-class": "^7.1",
+        "pear/log": "^1.13",
+        "sunra/php-simple-html-dom-parser": "1.5.2",
+        "php-activerecord/php-activerecord": "1.1.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "timosh",
+            "email": "mrtimosh@gmail.com"
+        }
+    ],
+    "autoload": {
+         "classmap": [
+            "parser/",
+            "model/"
+        ]
+        
+    }
+    
+}
