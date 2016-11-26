@@ -11,13 +11,14 @@ class Parser_Abstract {
     protected $errors_logger, $parser_logger;
     protected $curl, $multi_curl;
     protected $iteration;
+    protected $config;
     
     public function __construct() {
-        $this->errors_logger = Log::singleton('file', '/var/www/html/drive2_trip_parser/trip/kyiv/error.txt', 'ident');
-        $this->parser_logger = Log::singleton('file', '/var/www/html/drive2_trip_parser/trip/kyiv/parser.txt', 'ident');
+        $this->errors_logger = Log::singleton('file', APPDIR.'/trip/kyiv/error.txt', 'ident');
+        $this->parser_logger = Log::singleton('file', APPDIR.'/trip/kyiv/parser.txt', 'ident');
         $this->curl = new Curl();
         $this->multi_curl = new MultiCurl();
-        
+        $this->multi_curl->setTimeout(3);
         $current_class = $this;
                 
         $this->multi_curl->success(function($instance) {
@@ -36,8 +37,8 @@ class Parser_Abstract {
         $this->multi_curl->complete(function($instance) use ($current_class) {
             //echo 'call completed' . "\n";
             $current_class->iteration++;
-            $current_class->parser_logger->log($instance->url." was successfuly parsed");
-            if($current_class->iteration >100){
+            $current_class->parser_logger->log($instance->url." end parsing");
+            if($current_class->iteration >25250){
                 die('Пока хватит мучить драйв2))');
             }
         });
@@ -64,7 +65,7 @@ class Parser_Abstract {
         }
     }
 
-    private function urlNormalize(string $url): string {
+    protected function urlNormalize(string $url): string {
         if (!strpos($url, "drive2.ru")) {
             $url = "https://www.drive2.ru" . $url;
         }
@@ -76,11 +77,11 @@ class Parser_Abstract {
         // serialize your input array (say $array)
         $serializedData = serialize($data);
         // save serialized data in a text file
-        file_put_contents('/var/www/html/drive2_trip_parser/trip/'.$name.'.txt', $serializedData);
+        file_put_contents(APPDIR.'/trip/'.$name.'.txt', $serializedData);
     }
     
      protected function readSerializeData(string $file_name) { 
-         $file_name = '/var/www/html/drive2_trip_parser/trip/'.$file_name.'.txt';
+         $file_name = APPDIR.'/trip/'.$file_name.'.txt';
          if (file_exists($file_name)) {
               $recoveredData = file_get_contents($file_name);
               return unserialize($recoveredData);

@@ -10,7 +10,7 @@ use parser\Parser_Abstract;
 class Car_Links_Parser extends Parser_Abstract{
 
     public $parsed_data;
-
+    
     public function __construct(string $url) {
         parent::__construct();
         
@@ -47,6 +47,7 @@ class Car_Links_Parser extends Parser_Abstract{
         }  
         
         $this->parsed_data=$parse_url;
+        $this->saveSerializeData($this->getMarkName($url),  $this->parsed_data);
     }
    
     private function getMarkName(string $url):string{

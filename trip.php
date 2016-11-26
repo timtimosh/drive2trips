@@ -1,5 +1,4 @@
 <?php
-
 /* 
  * @author mrtimosh@gmail.com
  */
@@ -18,12 +17,13 @@ ActiveRecord\Config::initialize(function($cfg)
    $cfg->set_model_directory('model');
    $cfg->set_connections(
      array(
-       'production' => 'mysql://root:121331@localhost/drive2'
+       'production' => 'mysql://root:121331@localhost/drive2;charset=utf8mb4'
      )
    );
     $cfg->set_default_connection('production');
 });
 
+define('APPDIR',__DIR__);
 
 $parser = new parser\Trip_Parser();
 $parser->start();
