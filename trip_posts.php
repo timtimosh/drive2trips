@@ -25,7 +25,5 @@ ActiveRecord\Config::initialize(function($cfg)
 
 define('APPDIR',__DIR__);
 
-$parser_pages = new parser\Trip_Page_Parser();
+$parser_pages = new parser\Trip_Post_Parser();
 $parser_pages->start();
-
-

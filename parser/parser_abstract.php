@@ -18,7 +18,7 @@ class Parser_Abstract {
         $this->parser_logger = Log::singleton('file', APPDIR.'/trip/kyiv/parser.txt', 'ident');
         $this->curl = new Curl();
         $this->multi_curl = new MultiCurl();
-        $this->multi_curl->setTimeout(3);
+        $this->multi_curl->setTimeout(mt_rand(4,8));
         $current_class = $this;
                 
         $this->multi_curl->success(function($instance) {
@@ -38,7 +38,7 @@ class Parser_Abstract {
             //echo 'call completed' . "\n";
             $current_class->iteration++;
             $current_class->parser_logger->log($instance->url." end parsing");
-            if($current_class->iteration >25250){
+            if($current_class->iteration >34150){
                 die('Пока хватит мучить драйв2))');
             }
         });
@@ -88,4 +88,5 @@ class Parser_Abstract {
          }
          return false;    
     }
+   
 }
